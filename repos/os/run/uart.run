@@ -1,11 +1,13 @@
-if { ![have_board pbxa9] } {
-	puts "Platform is unsupported."
-	exit 0
-}
+#if { ![have_board pbxa9] } {
+#	puts "Platform is unsupported."
+#	exit 0
+#}
 
 build { core init timer lib/ld driver/uart test/uart }
 
 create_boot_directory
+
+
 
 install_config {
 	<config>
@@ -23,28 +25,12 @@ install_config {
 			<any-service> <parent/> <any-child/> </any-service>
 		</default-route>
 		<default caps="100"/>
-		<start name="timer">
-			<resource name="RAM" quantum="1M"/>
-			<provides><service name="Timer"/></provides>
-		</start>
-		<start name="pbxa9_uart">
+		<start name="imx_uart">
 			<resource name="RAM" quantum="1M"/>
 			<provides>
 				<service name="Uart"/>
 				<service name="Terminal"/>
 			</provides>
-			<config>
-				<policy label_prefix="test-uart1" uart="1"/>
-				<policy label_prefix="test-uart2" uart="1"/>
-			</config>
-		</start>
-		<start name="test-uart1">
-			<binary name="test-uart"/>
-			<resource name="RAM" quantum="1M"/>
-		</start>
-		<start name="test-uart2">
-			<binary name="test-uart"/>
-			<resource name="RAM" quantum="1M"/>
 		</start>
 	</config>
 }
