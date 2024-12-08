@@ -179,6 +179,7 @@ static void test(Libc::Env & env)
 
 	int i = 0;
 
+	char buf[4096];
 	while (true) {
 		int retval = select(client + 1, &read_sock_set, 0, 0, 0);
 		if (retval == -1) {
@@ -186,8 +187,7 @@ static void test(Libc::Env & env)
 			throw Select_failed();
 		}
 
-		char buf[4096];
-		::memset(buf, 0, sizeof(buf));
+		//::memset(buf, 0, sizeof(buf));
 		if (FD_ISSET(s, &read_sock_set)) {
 			// log("Received data socket");
 			/* receive and send back one message without any modifications */
